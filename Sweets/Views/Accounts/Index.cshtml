@@ -1,0 +1,20 @@
+@{
+  Layout = "_Layout";
+}
+
+@using System.Security.Claims
+
+@if (User.Identity.IsAuthenticated)
+{
+  <h2>You are now logged in as @User.Identity.Name</h2>
+  <hr />
+  <h4> @Html.ActionLink("See your list of Treats", "Index", "Treats") </h4>
+  <br>
+  <h4> @Html.ActionLink("See your list of Flavors", "Index", "Flavors")</h4>
+}
+else
+{
+  <h4>Welcome to Pierre's Sweet and Savory Treats!</h4>
+  <h5>@Html.ActionLink("Log in", "Login")</h5>
+  <h5>@Html.ActionLink("Create account", "Register")</h5>
+}

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+// using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Sweets.Models;
 using System.Collections.Generic;
@@ -14,9 +14,9 @@ namespace Sweets.Controllers
   [Authorize]
   public class FlavorsController : Controller
   {
-    private readonly BakeryContext _db;
+    private readonly SweetsContext _db;
 
-    public FlavorsController(BakeryContext db)
+    public FlavorsController(SweetsContext db)
     {
       _db = db;
     }
