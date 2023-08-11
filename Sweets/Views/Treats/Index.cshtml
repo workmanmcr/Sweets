@@ -1,0 +1,26 @@
+@{
+  Layout = "_Layout";
+}
+
+@using Bakery.Models;
+@model IEnumerable<Bakery.Models.Treat>
+
+<h2>Treats</h2>
+<hr />
+<br>
+@if (Model.Any())
+{
+  <ul>
+    @foreach (Treat treat in Model)
+    {
+      <li>@Html.ActionLink($"{treat.Title}", "Details", new { id = treat.TreatId })</li>
+    }
+  </ul>
+} 
+else
+{
+  <h3>No treats have been added yet!</h3>
+}
+<hr />
+<br>
+<h5>@Html.ActionLink("Add treat", "Create")</h5>

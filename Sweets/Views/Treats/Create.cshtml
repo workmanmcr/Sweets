@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Sweets.Models.Treat
+
+<h4>Add a treat</h4>
+<hr />
+<br>
+
+@using (Html.BeginForm())
+{
+  <p>Title:
+  @Html.TextBoxFor(model => model.Title, new { @class = "form-control", placeholder="Required", required="required", style="width: 600px;"})</p>
+
+  <br>
+  <p><input type="submit" value="Save" class="btn btn-default" /></p>
+}
+<hr />
+<br>
+<h5>@Html.ActionLink("Back to treats", "Index")</h5>
