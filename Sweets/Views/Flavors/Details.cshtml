@@ -4,13 +4,13 @@
 
 @model Sweets.Models.Flavor  
 
-<h2>flavor details</h2>  // Replaced "machine details" with "flavor details"
+<h2>flavor details</h2>  
 
 <hr />
 
-<h3>@Html.DisplayFor(model => model.FlavorName)</h3>  // Replaced "MachineName" with "FlavorName"
+<h3>@Html.DisplayFor(model => model.FlavorName)</h3>  
 
-<h4>treats with this flavor:</h4>  // Replaced "engineers qualified to service this machine:" with "treats with this flavor:"
+<h4>treats with this flavor:</h4> 
 @if(@Model.JoinEntities.Count == 0)
 {
     <p>this flavor is not used in any treats</p>  
@@ -28,8 +28,8 @@
 </ul>
 
 <ul class="menu-links">
-    <li>@Html.ActionLink("edit flavor", "Edit", new { id = Model.FlavorId })</li>  // Replaced "edit machine" with "edit flavor"
-    <li>@Html.ActionLink("delete this flavor", "Delete", new { id = Model.FlavorId })</li>  // Replaced "delete this machine" with "delete this flavor"
-    <li>@Html.ActionLink("add a treat with this flavor", "AddTreat", new {id = Model.FlavorId })</li>  // Replaced "add an engineer to this machine" with "add a treat with this flavor"
-    <li>@Html.ActionLink("back to flavor inventory", "Index")</li>  // Replaced "back to machine inventory" with "back to flavor inventory"
+    <li>@Html.ActionLink("edit flavor", "Edit", new { id = Model.FlavorId })</li>  
+    <li>@Html.ActionLink("delete this flavor", "Delete", new { id = Model.FlavorId })</li>  
+    <li>@Html.ActionLink("add a treat with this flavor", "AddTreat", new {id = Model.FlavorId })</li>  
+    <li>@Html.ActionLink("back to flavor inventory", "Index")</li> 
 </ul>
