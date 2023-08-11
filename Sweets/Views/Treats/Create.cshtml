@@ -11,7 +11,7 @@
 @using (Html.BeginForm())
 {
   <p>Title:
-  @Html.TextBoxFor(model => model.Title, new { @class = "form-control", placeholder="Required", required="required", style="width: 600px;"})</p>
+  @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder="Required", required="required", style="width: 600px;"})</p>
 
   <br>
   <p><input type="submit" value="Save" class="btn btn-default" /></p>

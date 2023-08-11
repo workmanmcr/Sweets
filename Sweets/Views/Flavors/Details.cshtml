@@ -1,33 +1,35 @@
 @{
-  Layout = "_Layout";
+    Layout = "_Layout";
 }
 
-@model Sweets.Models.Flavor;
+@model Sweets.Models.Flavor  
 
-<h2>@Html.DisplayFor(model => model.Name)</h2>
+<h2>flavor details</h2>  // Replaced "machine details" with "flavor details"
+
 <hr />
-<br>
-</h3>
 
+<h3>@Html.DisplayFor(model => model.FlavorName)</h3>  // Replaced "MachineName" with "FlavorName"
+
+<h4>treats with this flavor:</h4>  // Replaced "engineers qualified to service this machine:" with "treats with this flavor:"
 @if(@Model.JoinEntities.Count == 0)
 {
-  <p>No treats have this flavor listed</p>
-  <h5>@Html.ActionLink("Add this flavor to a treat", "AddTreat", new { id = Model.FlavorId })</h5>
+    <p>this flavor is not used in any treats</p>  
 }
-else
-{
-  <h4>Treats with this flavor:</h4>
-  <ul>
-  @foreach(var join in Model.JoinEntities)
-  {
-    <li>@join.Treat.Title</li>
-  }
-  </ul>
-  <br>
-  <h5>@Html.ActionLink("Add this flavor to a treat", "AddTreat", new { id = Model.FlavorId })</h5>
-}
-<hr />
+<ul>
+    @foreach (var join in Model.JoinEntities)
+    {
+        <li>@Html.ActionLink($"{join.Treat.Name}", "Details", "Treats", new {id = join.Treat.TreatId})</li>  
+        @using (Html.BeginForm("DeleteTreat", "Flavors"))  
+        {
+            @Html.Hidden("joinId", @join.TreatFlavorId)  
+            <input type="submit" value="remove" />
+        }
+    }
+</ul>
 
-<h5>@Html.ActionLink("Edit flavor", "Edit", new { id = Model.FlavorId }) | @Html.ActionLink("Delete flavor", "Delete", new { id = Model.FlavorId })</h5>
-<br>
-<h5>@Html.ActionLink("Back to list of flavors", "Index")</h5>
+<ul class="menu-links">
+    <li>@Html.ActionLink("edit flavor", "Edit", new { id = Model.FlavorId })</li>  // Replaced "edit machine" with "edit flavor"
+    <li>@Html.ActionLink("delete this flavor", "Delete", new { id = Model.FlavorId })</li>  // Replaced "delete this machine" with "delete this flavor"
+    <li>@Html.ActionLink("add a treat with this flavor", "AddTreat", new {id = Model.FlavorId })</li>  // Replaced "add an engineer to this machine" with "add a treat with this flavor"
+    <li>@Html.ActionLink("back to flavor inventory", "Index")</li>  // Replaced "back to machine inventory" with "back to flavor inventory"
+</ul>

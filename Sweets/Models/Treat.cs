@@ -1,18 +1,18 @@
 using System.Collections.Generic;
+using Sweets.Models; 
 
-namespace Sweets.Models
+namespace Sweets.Models  
 {
-  public class Treat
-  {
-    public Treat()
+    public class Treat  
     {
-      this.JoinEntities = new HashSet<TreatFlavor>();
-    }
+        public Treat()
+        {
+            this.JoinEntities = new HashSet<TreatFlavor>();  
+        }
 
-    public int TreatId { get; set; }
-    public string Title { get; set; }
-    public virtual ApplicationUser User { get; set; } 
-
-    public virtual ICollection<TreatFlavor> JoinEntities { get;}
-  }
+        public int TreatId { get; set; }  
+        public string Name { get; set; }  
+        public List<Flavor> Flavors { get; set; }  
+        public virtual ICollection<TreatFlavor> JoinEntities { get; set; }  
+}
 }

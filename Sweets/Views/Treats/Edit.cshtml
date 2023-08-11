@@ -4,7 +4,7 @@
 
 @model Sweets.Models.Treat
 
-<h2>Edit @Html.DisplayFor(model => model.Title)</h2>
+<h2>Edit @Html.DisplayFor(model => model.Name)</h2>
 <hr />
 <br>
 
@@ -13,7 +13,7 @@
   @Html.HiddenFor(model => model.TreatId)
 
   <p>Title:
-  @Html.TextBoxFor(model => model.Title, new { @class = "form-control", placeholder="Required", required="required", style="width: 600px;"})</p>
+  @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder="Required", required="required", style="width: 600px;"})</p>
 
   <p>Flavor:
   @Html.DropDownList("FlavorId")</p>
@@ -30,7 +30,7 @@
       <dt>@join.Flavor.Name
         @using (Html.BeginForm("DeleteFlavor", "Treats"))
         {
-        @Html.Hidden("joinId", @join.FlavorTreatId)
+        @Html.Hidden("joinId", @join.TreatFlavorId)
         <input type="submit" value="Delete" class="btn"/>
         }</dt>
     </dl>
