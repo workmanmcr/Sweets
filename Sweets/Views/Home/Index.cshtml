@@ -1,48 +1,53 @@
 ﻿@{
-  Layout = "_Layout";
+    Layout = "_Layout";
 }
 
-@using Sweets.Models;
+@using Sweets.Models; 
 
-<h1>Welcome to Sweets!</h1>
+<h1>Welcome to the Sweets App!</h1>  
 
 <hr>
 
-<h4>Trears</h4>
-@if (Model["categories"].Length == 0)
+<h4>Flavors</h4> 
+@if (Model["flavors"].Length == 0)  
 {
-  <p>No categories have been added yet!</p>
-} 
+    <p>No flavors have been added yet!</p>
+}
 <ul>
-  @foreach (Category cat in Model["categories"])
-  {
-    <li>@Html.ActionLink(@cat.Name, "Details", "Categories", new { id = @cat.CategoryId})</li>
-  }
+    @foreach (Flavor flavor in Model["flavors"])  
+    {
+        @if (!string.IsNullOrEmpty(flavor.FlavorName))
+        {
+            <li>@Html.ActionLink(@flavor.FlavorName, "Details", "Flavors", new { id = @flavor.FlavorId })</li>  
+        }
+    }
 </ul>
 
 @if (User.Identity.IsAuthenticated)
 {
-  <h4>Items for @User.Identity.Name</h4>
-  @if (Model["items"].Length == 0)
-  {
-    <p>No items have been added yet!</p>
-  } 
-  <ul>
-    @foreach (Item item in Model["items"])
+    <h4>Treats for @User.Identity.Name</h4>  
+    @if (Model["treats"].Length == 0)  
     {
-      <li>@Html.ActionLink(@item.Description, "Details", "Items", new { id = @item.ItemId})</li>
+        <p>No treats have been added yet!</p>  
     }
-  </ul>
+    <ul>
+        @foreach (Treat treat in Model["treats"])  
+        {
+            @if (!string.IsNullOrEmpty(treat.Name))
+            {
+                <li>@Html.ActionLink(@treat.Name, "Details", "Treats", new { id = @treat.TreatId })</li>
+            }
+        }
+    </ul>
 }
 else
 {
-  <h4>Items</h4>
-  <p>Please @Html.ActionLink("log in", "LogIn", "Account") to view or manage your items.</p>
+    <h4>Treats</h4>  // Replaced "Items" with "Treats"
+    <p>Please @Html.ActionLink("log in", "LogIn", "Account") to view or manage your treats.</p>
 }
 
 <hr>
 
-<p>@Html.ActionLink("Manage items", "Index", "Items")</p> 
-<p>@Html.ActionLink("Manage categories", "Index", "Categories")</p>
-<p>@Html.ActionLink("Manage tags", "Index", "Tags")</p>
+<p>@Html.ActionLink("Manage treats", "Index", "Treats")</p>
+<p>@Html.ActionLink("Manage flavors", "Index", "Flavors")</p> 
 <p>@Html.ActionLink("Create or manage an account", "Index", "Account")</p>

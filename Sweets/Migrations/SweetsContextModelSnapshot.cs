@@ -19,21 +19,6 @@ namespace Sweets.Migrations
                 .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("FlavorTreat", b =>
-                {
-                    b.Property<int>("FlavorsFlavorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TreatsTreatId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FlavorsFlavorId", "TreatsTreatId");
-
-                    b.HasIndex("TreatsTreatId");
-
-                    b.ToTable("FlavorTreat");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -238,7 +223,12 @@ namespace Sweets.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)");
+
                     b.HasKey("FlavorId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Flavors");
                 });
@@ -249,10 +239,20 @@ namespace Sweets.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("FlavorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)");
+
                     b.HasKey("TreatId");
+
+                    b.HasIndex("FlavorId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Treats");
                 });
@@ -276,21 +276,6 @@ namespace Sweets.Migrations
                     b.HasIndex("TreatId");
 
                     b.ToTable("TreatFlavors");
-                });
-
-            modelBuilder.Entity("FlavorTreat", b =>
-                {
-                    b.HasOne("Sweets.Models.Flavor", null)
-                        .WithMany()
-                        .HasForeignKey("FlavorsFlavorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sweets.Models.Treat", null)
-                        .WithMany()
-                        .HasForeignKey("TreatsTreatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -344,6 +329,32 @@ namespace Sweets.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Sweets.Models.Flavor", b =>
+                {
+                    b.HasOne("Sweets.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Sweets.Models.Treat", b =>
+                {
+                    b.HasOne("Sweets.Models.Flavor", "Flavor")
+                        .WithMany("Treats")
+                        .HasForeignKey("FlavorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sweets.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Flavor");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Sweets.Models.TreatFlavor", b =>
                 {
                     b.HasOne("Sweets.Models.Flavor", "Flavor")
@@ -366,6 +377,8 @@ namespace Sweets.Migrations
             modelBuilder.Entity("Sweets.Models.Flavor", b =>
                 {
                     b.Navigation("JoinEntities");
+
+                    b.Navigation("Treats");
                 });
 
             modelBuilder.Entity("Sweets.Models.Treat", b =>
