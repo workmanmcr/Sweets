@@ -1,15 +1,13 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Sweets.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Sweets.Controllers;
-
-public class HomeController : Controller
+namespace Sweets.Controllers
 {
-    
-    public IActionResult Index()
+  public class HomeController : Controller
+  {
+    [HttpGet("/")]
+    public ActionResult Index()
     {
-        return View();
+      return View();
     }
-
+  }
 }
