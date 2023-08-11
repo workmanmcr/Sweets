@@ -11,6 +11,7 @@ namespace Sweets.Models
         }
 
         public int TreatId { get; set; }  
+      
         public string Name { get; set; }  
         public List<Flavor> Flavors { get; set; }  
         public virtual ICollection<TreatFlavor> JoinEntities { get; set; }  
