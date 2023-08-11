@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Sweets.Models
 {
-  public class SweetsContext : DbContext
+  public class SweetsContext : IdentityDbContext<ApplicationUser>
   {
     public virtual DbSet<Treat> Treats { get; set; }
     public DbSet<Flavor> Flavors { get; set; }
