@@ -1,0 +1,34 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Sweets.Models.Flavor
+
+<h2>Edit flavor: @Html.DisplayFor(model => model.Name)</h2>
+<hr />
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.FlavorId)
+<br>
+  <h5>Flavor name:</h5>
+  <h5>@Html.EditorFor(model => model.Name) <input type="submit" value="Save" class="btn"/></h5>
+}
+
+<br>
+<hr />
+<h4>Manage treats</h4>
+<br>
+  @foreach(var join in Model.JoinEntities)
+  {
+    <dl>
+      @join.Treat.Title
+        @using (Html.BeginForm("DeleteTreat", "Flavors"))
+        {
+        @Html.Hidden("joinId", @join.FlavorTreatId)
+        <input type="submit" value="Delete" class="btn"/>
+        }
+    </dl>
+    }
+<hr />
+<br>
+<h5>@Html.ActionLink("Back to list of flavors", "Index")</h5>

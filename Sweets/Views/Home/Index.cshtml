@@ -1,8 +1,27 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+  Layout = "_Layout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Welcome to SweetTreats!</h2>
+<hr />
+<br>
+
+@if (User.Identity.IsAuthenticated)
+{
+  <h4> @Html.ActionLink("See your list of Treats", "Index", "Treats") </h4>
+  <br>
+  <h4> @Html.ActionLink("See your list of Flavors", "Index", "Flavors")</h4>
+  <br>
+  <hr />
+  <p>Logged in as @User.Identity.Name>
+
+  @using (Html.BeginForm("LogOff", "Account"))
+  {
+    <input type="submit" class="btn btn-default" value="Log out" />
+  } </p>
+}
+else
+{
+  <h5>@Html.ActionLink("Log in", "Login", "Account")</h5>
+  <h5>@Html.ActionLink("Create account", "Register", "Account")</h5>
+}
