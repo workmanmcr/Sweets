@@ -101,12 +101,20 @@ namespace Seets.Controllers
     }
 
     public ActionResult AddFlavor(int id)
+   {
+    var thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+    
+    if (thisTreat == null)
     {
-      var thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
-      ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Name");
-      return View(thisTreat);
+        return NotFound(); // Return a 404 Not Found response
     }
 
+    // Populate the SelectList with Flavor data
+    var flavors = _db.Flavors.ToList();
+    ViewBag.FlavorId = new SelectList(flavors, "FlavorId", "FlavorName");
+
+    return View(thisTreat);
+}
     [HttpPost]
     public ActionResult AddFlavor(Treat treat, int FlavorId)
     {

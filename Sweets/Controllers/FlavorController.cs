@@ -1,12 +1,16 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Sweets.Models;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 namespace Sweets.Controllers  
 {
+    [Authorize]
    public class FlavorsController : Controller
   {
     private readonly SweetsContext _db;
@@ -21,7 +25,6 @@ namespace Sweets.Controllers
       List<Flavor> model = _db.Flavors.ToList();
       return View(model);
     }
-
     public ActionResult Create()
     {
       return View();
