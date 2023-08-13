@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Sweets.Migrations
 {
-    public partial class AddTreatsToFlavors : Migration
+    public partial class AddTreatFlavor : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,6 +64,21 @@ namespace Sweets.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Flavors",
+                columns: table => new
+                {
+                    FlavorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FlavorName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Flavors", x => x.FlavorId);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -195,30 +210,6 @@ namespace Sweets.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Flavors",
-                columns: table => new
-                {
-                    FlavorId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FlavorName = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Flavors", x => x.FlavorId);
-                    table.ForeignKey(
-                        name: "FK_Flavors_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Treats",
                 columns: table => new
                 {
@@ -226,7 +217,7 @@ namespace Sweets.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    FlavorId = table.Column<int>(type: "int", nullable: false),
+                    FlavorId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -242,13 +233,12 @@ namespace Sweets.Migrations
                         name: "FK_Treats_Flavors_FlavorId",
                         column: x => x.FlavorId,
                         principalTable: "Flavors",
-                        principalColumn: "FlavorId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "FlavorId");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TreatFlavors",
+                name: "TreatFlavor",
                 columns: table => new
                 {
                     TreatFlavorId = table.Column<int>(type: "int", nullable: false)
@@ -258,15 +248,15 @@ namespace Sweets.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TreatFlavors", x => x.TreatFlavorId);
+                    table.PrimaryKey("PK_TreatFlavor", x => x.TreatFlavorId);
                     table.ForeignKey(
-                        name: "FK_TreatFlavors_Flavors_FlavorId",
+                        name: "FK_TreatFlavor_Flavors_FlavorId",
                         column: x => x.FlavorId,
                         principalTable: "Flavors",
                         principalColumn: "FlavorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TreatFlavors_Treats_TreatId",
+                        name: "FK_TreatFlavor_Treats_TreatId",
                         column: x => x.TreatId,
                         principalTable: "Treats",
                         principalColumn: "TreatId",
@@ -312,18 +302,13 @@ namespace Sweets.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flavors_UserId",
-                table: "Flavors",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TreatFlavors_FlavorId",
-                table: "TreatFlavors",
+                name: "IX_TreatFlavor_FlavorId",
+                table: "TreatFlavor",
                 column: "FlavorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TreatFlavors_TreatId",
-                table: "TreatFlavors",
+                name: "IX_TreatFlavor_TreatId",
+                table: "TreatFlavor",
                 column: "TreatId");
 
             migrationBuilder.CreateIndex(
@@ -355,7 +340,7 @@ namespace Sweets.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "TreatFlavors");
+                name: "TreatFlavor");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -364,10 +349,10 @@ namespace Sweets.Migrations
                 name: "Treats");
 
             migrationBuilder.DropTable(
-                name: "Flavors");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Flavors");
         }
     }
 }

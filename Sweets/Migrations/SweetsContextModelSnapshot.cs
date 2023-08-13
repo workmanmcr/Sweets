@@ -220,15 +220,7 @@ namespace Sweets.Migrations
                     b.Property<string>("FlavorName")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
-
                     b.HasKey("FlavorId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Flavors");
                 });
@@ -259,25 +251,23 @@ namespace Sweets.Migrations
 
             modelBuilder.Entity("Sweets.Models.TreatFlavor", b =>
                 {
-                    b.Property<int>("TreatId")
+                    b.Property<int>("TreatFlavorId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("FlavorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TreatFlavorId")
+                    b.Property<int>("TreatId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TreatId1")
-                        .HasColumnType("int");
-
-                    b.HasKey("TreatId", "FlavorId");
+                    b.HasKey("TreatFlavorId");
 
                     b.HasIndex("FlavorId");
 
-                    b.HasIndex("TreatId1");
+                    b.HasIndex("TreatId");
 
-                    b.ToTable("TreatFlavors");
+                    b.ToTable("TreatFlavor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -331,19 +321,10 @@ namespace Sweets.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Sweets.Models.Flavor", b =>
-                {
-                    b.HasOne("Sweets.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Sweets.Models.Treat", b =>
                 {
                     b.HasOne("Sweets.Models.Flavor", "Flavor")
-                        .WithMany("Treats")
+                        .WithMany()
                         .HasForeignKey("FlavorId");
 
                     b.HasOne("Sweets.Models.ApplicationUser", "User")
@@ -369,10 +350,6 @@ namespace Sweets.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Sweets.Models.Treat", null)
-                        .WithMany("treatflavors")
-                        .HasForeignKey("TreatId1");
-
                     b.Navigation("Flavor");
 
                     b.Navigation("Treat");
@@ -381,15 +358,11 @@ namespace Sweets.Migrations
             modelBuilder.Entity("Sweets.Models.Flavor", b =>
                 {
                     b.Navigation("JoinEntities");
-
-                    b.Navigation("Treats");
                 });
 
             modelBuilder.Entity("Sweets.Models.Treat", b =>
                 {
                     b.Navigation("JoinEntities");
-
-                    b.Navigation("treatflavors");
                 });
 #pragma warning restore 612, 618
         }

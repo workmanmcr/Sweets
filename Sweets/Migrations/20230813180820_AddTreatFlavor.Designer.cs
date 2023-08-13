@@ -11,8 +11,8 @@ using Sweets.Models;
 namespace Sweets.Migrations
 {
     [DbContext(typeof(SweetsContext))]
-    [Migration("20230811225758_AddTreatsToFlavors")]
-    partial class AddTreatsToFlavors
+    [Migration("20230813180820_AddTreatFlavor")]
+    partial class AddTreatFlavor
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -222,15 +222,7 @@ namespace Sweets.Migrations
                     b.Property<string>("FlavorName")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
-
                     b.HasKey("FlavorId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Flavors");
                 });
@@ -241,7 +233,7 @@ namespace Sweets.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("FlavorId")
+                    b.Property<int?>("FlavorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -277,7 +269,7 @@ namespace Sweets.Migrations
 
                     b.HasIndex("TreatId");
 
-                    b.ToTable("TreatFlavors");
+                    b.ToTable("TreatFlavor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -331,22 +323,11 @@ namespace Sweets.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Sweets.Models.Flavor", b =>
-                {
-                    b.HasOne("Sweets.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Sweets.Models.Treat", b =>
                 {
                     b.HasOne("Sweets.Models.Flavor", "Flavor")
-                        .WithMany("Treats")
-                        .HasForeignKey("FlavorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("FlavorId");
 
                     b.HasOne("Sweets.Models.ApplicationUser", "User")
                         .WithMany()
@@ -379,8 +360,6 @@ namespace Sweets.Migrations
             modelBuilder.Entity("Sweets.Models.Flavor", b =>
                 {
                     b.Navigation("JoinEntities");
-
-                    b.Navigation("Treats");
                 });
 
             modelBuilder.Entity("Sweets.Models.Treat", b =>

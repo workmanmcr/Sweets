@@ -1,53 +1,16 @@
 ﻿@{
-    Layout = "_Layout";
+  Layout = "_Layout";
 }
 
-@using Sweets.Models; 
-
-<h1>Welcome to Sweets!</h1>  
-
-<hr>
-
-<h4>Flavors</h4> 
-@if (Model["flavors"].Length == 0)
-{
-    <p>No flavors have been added yet!</p>
-}
-<ul>
-    @foreach (Flavor flavor in Model["flavors"])  
-    {
-        @if (!string.IsNullOrEmpty(flavor.FlavorName))
-        {
-            <li>@Html.ActionLink(@flavor.FlavorName, "Details", "Flavors", new { id = @flavor.FlavorId })</li>  
-        }
-    }
-</ul>
-
-@if (User.Identity.IsAuthenticated)
-{
-    <h4>Treats for @User.Identity.Name</h4>  
-    @if (Model["treats"].Length == 0) 
-    {
-        <p>No treats have been added yet!</p>  
-    }
-    <ul>
-        @foreach (Treat treat in Model["treats"])  
-        {
-            @if (!string.IsNullOrEmpty(treat.Name))
-            {
-                <li>@Html.ActionLink(@treat.Name, "Details", "Treats", new { id = @treat.TreatId })</li>
-            }
-        }
-    </ul>
-}
-else
-{
-    <h4>Treats</h4>
-    <p>Please @Html.ActionLink("log in", "LogIn", "Account") to view or manage your treats.</p>
-}
-
-<hr>
-
-<p>@Html.ActionLink("Manage treats", "Index", "Treats")</p>
-<p>@Html.ActionLink("Manage flavors", "Index", "Flavors")</p> 
-<p>@Html.ActionLink("Create or manage an account", "Index", "Account")</p>
+<div class="container my-4">
+    <div class="h-100 d-flex flex-column align-items-center"></div>  
+    <h1 class="text-center my-4">Welcome To Sweets</h1>
+    <div class="d-flex flex-column align-items-center my-4">
+    <div class="d-flex flex-column justify-content-center my-4">
+      <p class="btn btn-outline-warning btn-rounded">@Html.ActionLink("See all treats", "Index", "Treats")</p>
+      <p class="btn btn-outline-warning btn-rounded">@Html.ActionLink("Add a Treat", "Create", "Treats")</p>
+      <p class="btn btn-outline-warning btn-rounded">@Html.ActionLink("Create an account", "Index", "Account")</p>
+     
+     </div> 
+     </div>
+</div>  
